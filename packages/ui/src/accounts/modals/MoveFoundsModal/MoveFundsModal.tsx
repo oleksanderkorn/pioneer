@@ -71,7 +71,12 @@ export const MoveFundsModal = () => {
           <RowGapBlock gap={4}>
             <TextMedium bold>Accounts with transferable balances:</TextMedium>
             <RowGapBlock gap={16}>
-              <StyledOptionListAccount options={displayedAccounts} onChange={() => null} />
+              <StyledOptionListAccount
+                options={displayedAccounts}
+                onChange={() => null}
+                onOptionMouseEnter={() => null}
+                onOptionMouseLeave={() => null}
+              />
               <Info title="Suggestion">
                 <MoveFundsModalInfo insufficientBalances={insufficientBalances} noFreeAccounts={noFreeAccounts} />
               </Info>

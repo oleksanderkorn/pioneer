@@ -84,9 +84,18 @@ export const EmptyOption = styled.input`
   }
 `
 
-export const SelectComponent = styled.div`
+export const SelectComponent = styled.div<{ absolute?: boolean }>`
   display: flex;
-  position: relative;
+  ${({ absolute }) => {
+    if (absolute) {
+      return css`
+        position: absolute;
+      `
+    }
+    return css`
+      position: relative;
+    `
+  }}
   width: 100%;
   height: 100%;
   align-items: center;

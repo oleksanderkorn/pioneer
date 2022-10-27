@@ -8,10 +8,11 @@ import { accountOrNamed } from '@/accounts/model/accountOrNamed'
 import { isValidAddress } from '@/accounts/model/isValidAddress'
 import { RecoveryConditions } from '@/accounts/model/lockTypes'
 import { Account, AccountOption, LockType } from '@/accounts/types'
-import { Select, SelectedOption, SelectProps } from '@/common/components/selects'
+import { AccountListSelect, SelectedOption, SelectProps } from '@/common/components/selects'
 import { useKeyring } from '@/common/hooks/useKeyring'
 import { Address } from '@/common/types'
 
+import { AccountLockTooltip } from './AccountLockTooltip'
 import { filterByText } from './helpers'
 import { OptionAccount } from './OptionAccount'
 import { OptionListAccount } from './OptionListAccount'
@@ -43,6 +44,7 @@ export const BaseSelectAccount = React.memo(
     const options = accounts.filter(filter || (() => true))
 
     const [search, setSearch] = useState('')
+    const [hoveredOption, setHoveredOption] = useState<AccountOption | undefined>()
 
     const filteredOptions = useMemo(() => filterByText(options, search), [search, options])
     const keyring = useKeyring()
@@ -52,28 +54,41 @@ export const BaseSelectAccount = React.memo(
     useEffect(() => {
       if (filteredOptions.length === 0 && isValidAddress(search, keyring) && notSelected) {
         onChange?.(accountOrNamed(accounts, search, 'Unsaved account'))
+        setHoveredOption(undefined)
       }
     }, [filteredOptions, search, notSelected])
 
     const change = (selected: AccountOption, close: () => void) => {
       onChange?.(selected)
+      setHoveredOption(undefined)
       close()
     }
 
     return (
-      <Select
-        id={id}
-        selected={selected}
-        onChange={change}
-        onBlur={onBlur}
-        disabled={disabled}
-        renderSelected={renderSelected(isForStaking)}
-        placeholder="Select account or paste account address"
-        renderList={(onOptionClick) => (
-          <OptionListAccount onChange={onOptionClick} options={filteredOptions} isForStaking={isForStaking} />
-        )}
-        onSearch={(search) => setSearch(search)}
-      />
+      <>
+        <AccountListSelect
+          id={id}
+          selected={selected}
+          tooltip={
+            hoveredOption && <AccountLockTooltip key={hoveredOption.address} locks={hoveredOption.optionLocks} />
+          }
+          onChange={change}
+          onBlur={onBlur}
+          disabled={disabled}
+          renderSelected={renderSelected(isForStaking)}
+          placeholder="Select account or paste account address"
+          renderList={(onOptionClick) => (
+            <OptionListAccount
+              onChange={onOptionClick}
+              onOptionMouseEnter={setHoveredOption}
+              onOptionMouseLeave={() => setHoveredOption(undefined)}
+              options={filteredOptions}
+              isForStaking={isForStaking}
+            />
+          )}
+          onSearch={(search) => setSearch(search)}
+        />
+      </>
     )
   }
 )

@@ -14,10 +14,9 @@ import { OptionLock } from '../../types'
 
 interface Props {
   locks?: OptionLock[]
-  children: React.ReactNode
 }
 
-export const AccountLockTooltip = ({ locks, children }: Props) => {
+export const AccountLockTooltip = ({ locks }: Props) => {
   const { modal: originalModalName, modalData: originalModalData, showModal } = useModal()
   const tooltipTexts = useMemo(() => {
     const texts: React.ReactElement[] = []
@@ -92,8 +91,8 @@ export const AccountLockTooltip = ({ locks, children }: Props) => {
   }, [JSON.stringify(locks)])
 
   return (
-    <Tooltip tooltipText={tooltipTexts} maxWidth>
-      {children}
+    <Tooltip tooltipText={tooltipTexts} maxWidth tooltipOpen absolute>
+      <></>
     </Tooltip>
   )
 }
