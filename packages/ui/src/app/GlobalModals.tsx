@@ -1,7 +1,7 @@
 import React, { memo, ReactElement, useMemo } from 'react'
 import ReactDOM from 'react-dom'
 
-import { MoveFundsModal, MoveFundsModalCall } from '@/accounts/modals/MoveFundsModal'
+import { MoveFundsModal, MoveFundsModalCall } from '@/accounts/modals/MoveFoundsModal'
 import { RecoverBalanceModal, RecoverBalanceModalCall } from '@/accounts/modals/RecoverBalance'
 import { TransferModal, TransferModalCall } from '@/accounts/modals/TransferModal'
 import { AddBountyModalCall, AddBountyModal } from '@/bounty/modals/AddBountyModal'

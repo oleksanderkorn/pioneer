@@ -2,7 +2,7 @@ import { fireEvent, render, RenderResult, screen } from '@testing-library/react'
 import BN from 'bn.js'
 import React from 'react'
 
-import { MoveFundsModalCall } from '@/accounts/modals/MoveFundsModal'
+import { MoveFundsModalCall } from '@/accounts/modals/MoveFoundsModal'
 import { AccountsContext } from '@/accounts/providers/accounts/context'
 import { BalancesContext } from '@/accounts/providers/balances/context'
 import { ApiContext } from '@/api/providers/context'

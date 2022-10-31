@@ -4,7 +4,7 @@ import React, { useEffect, useMemo } from 'react'
 
 import { useHasRequiredStake } from '@/accounts/hooks/useHasRequiredStake'
 import { useTransactionFee } from '@/accounts/hooks/useTransactionFee'
-import { MoveFundsModalCall } from '@/accounts/modals/MoveFundsModal'
+import { MoveFundsModalCall } from '@/accounts/modals/MoveFoundsModal'
 import { useApi } from '@/api/hooks/useApi'
 import { FailureModal } from '@/common/components/FailureModal'
 import { useModal } from '@/common/hooks/useModal'
