@@ -45,6 +45,7 @@ export const BaseSelectAccount = React.memo(
 
     const [search, setSearch] = useState('')
     const [hoveredOption, setHoveredOption] = useState<AccountOption | undefined>()
+    const [tooltipOpen, setTooltipOpen] = useState<boolean>(true)
 
     const filteredOptions = useMemo(() => filterByText(options, search), [search, options])
     const keyring = useKeyring()
@@ -58,6 +59,12 @@ export const BaseSelectAccount = React.memo(
       }
     }, [filteredOptions, search, notSelected])
 
+    useEffect(() => {
+      if (!tooltipOpen) {
+        setHoveredOption(undefined)
+      }
+    }, [tooltipOpen])
+
     const change = (selected: AccountOption, close: () => void) => {
       onChange?.(selected)
       setHoveredOption(undefined)
@@ -70,9 +77,18 @@ export const BaseSelectAccount = React.memo(
           id={id}
           selected={selected}
           tooltip={
-            hoveredOption && <AccountLockTooltip key={hoveredOption.address} locks={hoveredOption.optionLocks} />
+            hoveredOption && (
+              <AccountLockTooltip
+                key={hoveredOption.address}
+                locks={hoveredOption.optionLocks}
+                tooltipOpen={tooltipOpen}
+              />
+            )
           }
           onChange={change}
+          onToggle={(isOpen) => {
+            setTooltipOpen(isOpen)
+          }}
           onBlur={onBlur}
           disabled={disabled}
           renderSelected={renderSelected(isForStaking)}
@@ -80,8 +96,13 @@ export const BaseSelectAccount = React.memo(
           renderList={(onOptionClick) => (
             <OptionListAccount
               onChange={onOptionClick}
-              onOptionMouseEnter={setHoveredOption}
-              onOptionMouseLeave={() => setHoveredOption(undefined)}
+              onOptionMouseEnter={(option) => {
+                setHoveredOption(option)
+                setTooltipOpen(true)
+              }}
+              onOptionMouseLeave={() => {
+                setTooltipOpen(false)
+              }}
               options={filteredOptions}
               isForStaking={isForStaking}
             />

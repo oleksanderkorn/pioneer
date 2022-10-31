@@ -12,6 +12,7 @@ import { SelectProps } from './types'
 
 interface AccountListSelecttWithTooltip<T, V> extends SelectProps<T, V> {
   tooltip: React.ReactNode
+  onToggle: (isOpen: boolean) => void
 }
 
 export const AccountListSelect = <T extends any, V extends any = T>({
@@ -24,6 +25,7 @@ export const AccountListSelect = <T extends any, V extends any = T>({
   onSearch,
   renderSelected,
   renderList,
+  onToggle,
   tooltip,
   className,
   onBlur,
@@ -37,6 +39,10 @@ export const AccountListSelect = <T extends any, V extends any = T>({
   useEffect(() => {
     onSearch?.(search)
   }, [search])
+
+  useEffect(() => {
+    onToggle(isOpen)
+  }, [isOpen])
 
   const onOptionClick = useCallback(
     (option: T) => {

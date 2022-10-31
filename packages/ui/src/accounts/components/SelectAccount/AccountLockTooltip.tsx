@@ -14,9 +14,10 @@ import { OptionLock } from '../../types'
 
 interface Props {
   locks?: OptionLock[]
+  tooltipOpen?: boolean
 }
 
-export const AccountLockTooltip = ({ locks }: Props) => {
+export const AccountLockTooltip = ({ locks, tooltipOpen }: Props) => {
   const { modal: originalModalName, modalData: originalModalData, showModal } = useModal()
   const tooltipTexts = useMemo(() => {
     const texts: React.ReactElement[] = []
@@ -91,7 +92,13 @@ export const AccountLockTooltip = ({ locks }: Props) => {
   }, [JSON.stringify(locks)])
 
   return (
-    <Tooltip inset={'240px auto auto -36px !important'} tooltipText={tooltipTexts} maxWidth tooltipOpen absolute>
+    <Tooltip
+      inset={'240px auto auto -36px !important'}
+      tooltipText={tooltipTexts}
+      maxWidth
+      tooltipOpen={tooltipOpen}
+      absolute
+    >
       <></>
     </Tooltip>
   )
