@@ -12,6 +12,7 @@ import { DefaultTooltip } from './TooltipDefault'
 export interface TooltipProps extends Omit<TooltipPopupProps, 'popUpHandlers' | 'position'> {
   absolute?: boolean
   maxWidth?: boolean
+  inset?: string
   children: React.ReactNode
 }
 
@@ -44,6 +45,7 @@ export const Tooltip = ({
   tooltipLinkText,
   tooltipLinkURL,
   popupContent,
+  inset,
   className,
   forBig,
 }: TooltipProps) => {
@@ -121,6 +123,7 @@ export const Tooltip = ({
                 style={styles.popper}
                 {...attributes.popper}
                 {...popUpHandlers}
+                inset={inset}
                 isTooltipActive={isTooltipActive}
                 forBig={forBig}
               >
@@ -145,7 +148,7 @@ export const Tooltip = ({
   )
 }
 
-export const TooltipPopupContainer = styled.div<{ isTooltipActive?: boolean; forBig?: boolean }>`
+export const TooltipPopupContainer = styled.div<{ isTooltipActive?: boolean; forBig?: boolean; inset?: string }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -209,7 +212,8 @@ export const TooltipPopupContainer = styled.div<{ isTooltipActive?: boolean; for
     inset: ${({ forBig }) => (forBig ? 'auto -12px 5px auto !important' : 'auto -16px 4px auto !important')};
   }
   &[data-popper-placement='bottom-start'] {
-    inset: ${({ forBig }) => (forBig ? '5px auto auto -13px !important' : '240px auto auto -36px !important')};
+    inset: ${({ inset, forBig }) =>
+      inset ? `${inset}` : forBig ? '5px auto auto -13px !important' : '4px auto auto -16px !important'};
   }
   &[data-popper-placement='bottom-end'] {
     inset: ${({ forBig }) => (forBig ? '5px -12px auto auto !important' : '4px -16px auto auto !important')};

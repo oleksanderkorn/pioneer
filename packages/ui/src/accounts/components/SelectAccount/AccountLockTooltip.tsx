@@ -91,7 +91,7 @@ export const AccountLockTooltip = ({ locks }: Props) => {
   }, [JSON.stringify(locks)])
 
   return (
-    <Tooltip tooltipText={tooltipTexts} maxWidth tooltipOpen absolute>
+    <Tooltip inset={'240px auto auto -36px !important'} tooltipText={tooltipTexts} maxWidth tooltipOpen absolute>
       <></>
     </Tooltip>
   )
